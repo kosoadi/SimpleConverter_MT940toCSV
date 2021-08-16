@@ -3,16 +3,17 @@
 from mt940 import MT940
 import csv
 import os
-import argparse
+from threading import Thread
 
-
-class ConverterMT940:
+class ConverterMT940(Thread):
 	
 	def __init__(self, input_file):
+		super(ConverterMT940, self).__init__()
 		self.input_file = input_file
 	
 	
-	def process_conversion(self):
+	#def process_conversion(self):
+	def run(self):
 		# define output filename, format: [input file name].csv
 		#output_file = self.input_file + ".csv"
 		output_file = self.input_file+".csv"
@@ -46,7 +47,6 @@ class ConverterMT940:
 		# get the ending balance currency
 		end_balance_currency = end_balance.currency
 
-		
 		# print(s) for testing purpose
 		"""
 		print (account_no)
@@ -86,7 +86,7 @@ class ConverterMT940:
 				"additional data",
 				"description"
 				])
-	
+			print (account_no)
 			# write transaction(s)
 			row_no = 1
 			for i in range(len(statement.transactions)):
